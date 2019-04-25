@@ -1,0 +1,28 @@
+version: "3"
+services:
+    nginx:
+        container_name: ${APPLICATION_NAME}_nginx
+        image: ${APPLICATION_NAME}_nginx
+        build:
+            context: docker/nginx
+        ports:
+            - 80:80
+            - 443:443
+    php-fpm:
+        container_name: ${APPLICATION_NAME}_php
+        build:
+          context: docker/php-fpm
+          dockerfile: "Dockerfile-${PHP_VERSION}"
+        expose:
+          - "9000"
+
+    db:
+        container_name: ${APPLICATION_NAME}_db
+        image: mysql:5.7
+        ports:
+            - 3307:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: ${APPLICATION_NAME}
+            MYSQL_USER: ${APPLICATION_NAME}
+            MYSQL_PASSWORD: root

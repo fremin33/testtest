@@ -1,0 +1,16 @@
+# =====================================
+#
+# Overrides docker-compose.yml to define Docker Sync volume for Mac users
+#
+# =====================================
+version: "3"
+services:
+    php-fpm:
+        volumes:
+            - app-sync:/var/www:nocopy
+            - /var/www/var/cache
+            - /var/www/var/logs
+volumes:
+  app-sync:
+    external:
+      name: ${APPLICATION_NAME}-sync
